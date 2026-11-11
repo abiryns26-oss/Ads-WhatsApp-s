@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الإعلانات السريعة - واتساب</title>
+    <style>
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --text: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"], input[type="file"], textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--primary);
+        }
+
+        textarea {
+            resize: vertical;
+            height: 70px;
+        }
+
+        .btn-generate {
+            width: 100%;
+            background-color: var(--primary-dark);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 5px;
+        }
+
+        .btn-generate:hover {
+            background-color: #0d6e63;
+        }
+
+        .preview-card {
+            margin-top: 25px;
+            border-top: 2px dashed #eee;
+            padding-top: 20px;
+            display: none;
+        }
+
+        .preview-card.active {
+            display: block;
+        }
+
+        .ad-image-container {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+            max-height: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .ad-image-container img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.05rem;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+            transition: transform 0.1s, background 0.2s;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #1ebe5d;
+        }
+
+        .whatsapp-btn:active {
+            transform: scale(0.98);
+        }
+
+        .whatsapp-icon {
+            width: 22px;
+            height: 22px;
+            fill: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📢 نشر إعلان واتساب سريع</h1>
+        
+        <div class="form-group">
+            <label for="adImage">اختر صورة الإعلان:</label>
+            <input type="file" id="adImage" accept="image/*">
+        </div>
+
+        <div class="form-group">
+            <label for="phoneInput">رقم الواتساب (يدعم 00 أو الأرقام المحلية):</label>
+            <input type="text" id="phoneInput" placeholder="مثال: 00963912345678 أو 0912345678">
+        </div>
+
+        <div class="form-group">
+            <label for="msgInput">نص الرسالة التلقائية:</label>
+            <textarea id="msgInput">مرحباً، أنا مهتم بهذا الإعلان وأرغب بالتفاصيل.</textarea>
+        </div>
+
+        <button class="btn-generate" onclick="createAd()">عرض الإعلان</button>
+
+        <div class="preview-card" id="previewCard">
+            <div class="ad-image-container">
+                <img id="outputImage" src="" alt="صورة الإعلان">
+            </div>
+            <a id="whatsappLink" href="#" target="_blank" class="whatsapp-btn">
+                <svg class="whatsapp-icon" viewBox="0 0 24 24"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.32 4.95l-1.4 5.12 5.24-1.37c1.45.79 3.12 1.22 4.84 1.22 5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18.18c-1.47 0-2.91-.39-4.17-1.13l-.3-.18-3.12.82.83-3.04-.2-.31c-.84-1.33-1.28-2.88-1.28-4.48 0-4.63 3.77-8.4 8.4-8.4s8.4 3.77 8.4 8.4-3.77 8.4-8.4 8.4zm4.61-6.29c-.25-.13-1.48-.73-1.71-.82-.23-.09-.39-.13-.56.13-.17.25-.65.82-.8 1-.15.17-.3.19-.55.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.3.38-.45.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.45.06-.69.32-.24.25-.92.9-.92 2.2s.94 2.56 1.07 2.74c.13.17 1.85 2.82 4.48 3.96.63.27 1.12.43 1.5.55.63.2 1.21.17 1.66.1.51-.08 1.48-.6 1.69-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.29z"/></svg>
+                تواصل عبر واتساب
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function createAd() {
+            const fileInput = document.getElementById('adImage');
+            let phoneInput = document.getElementById('phoneInput').value.trim();
+            const msgInput = document.getElementById('msgInput').value;
+            const previewCard = document.getElementById('previewCard');
+            const outputImage = document.getElementById('outputImage');
+            const whatsappLink = document.getElementById('whatsappLink');
+
+            if (fileInput.files.length === 0) {
+                alert('الرجاء اختيار صورة للإعلان أولاً.');
+                return;
+            }
+            if (!phoneInput) {
+                alert('الرجاء إدخال رقم الواتساب.');
+                return;
+            }
+
+            // معالجة دقيقة للرقم:
+            // 1. إذا بدأ بـ 00، استبدلها بـ علامة +
+            if (phoneInput.startsWith('00')) {
+                phoneInput = '+' + phoneInput.substring(2);
+            } 
+            // 2. إذا لم يبدأ بـ + وكان يبدأ بصفر محلي (مثل 09...)، افترض الكود السوري +963 أو اتركه حسب رغبتك
+            else if (!phoneInput.startsWith('+')) {
+                if (phoneInput.startsWith('0')) {
+                    phoneInput = '+963' + phoneInput.substring(1); // تحويل الصفر المحلي إلى مفتاح الدولة +963
+                } else {
+                    phoneInput = '+' + phoneInput;
+                }
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                outputImage.src = e.target.result;
+                
+                // استخدام رابط wa.me بالشكل الصحيح مع علامة الموجب (+) ومفتاح الدولة
+                const encodedMessage = encodeURIComponent(msgInput);
+                whatsappLink.href = `https://wa.me/${phoneInput.replace('+', '')}?text=${encodedMessage}`;
+
+                previewCard.classList.add('active');
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    </script>
+</body>
+</html>
